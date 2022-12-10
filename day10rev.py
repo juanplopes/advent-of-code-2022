@@ -1,5 +1,5 @@
 import sys
-A = ''.join(sys.stdin.read().split('\n'))
+A = ''.join(sys.stdin.read().splitlines())
 X = 1
 
 P = { '..': -2, '#.': -1, '##': 0, '.#': 2 }

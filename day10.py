@@ -7,7 +7,7 @@ def execute(program):
             yield X
             X += int(line[1])
 
-S = list(execute(line.split() for line in sys.stdin.read().strip().split('\n')))
+S = list(execute(line.split() for line in sys.stdin.read().splitlines()))
 print(sum(S[i-1]*i for i in [20, 60, 100, 140, 180, 220]))
 
 for i in range(6):
