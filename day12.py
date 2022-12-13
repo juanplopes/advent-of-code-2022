@@ -6,21 +6,17 @@ def solve(grid, *start):
                     if grid[i][j] in start)
     visited = set((i, j) for i, j, _, _ in Q)
 
-    def push(i, j, d, a):
-        if not 0 <= i < len(grid) or not 0 <= j < len(grid[i]): return
-        if (i, j) in visited: return
-        b = grid[i][j].replace('E', 'z')
-        if ord(b) > ord(a) + 1: return
-        visited.add((i, j))
-        Q.append((i, j, d + 1, b))
-
     while len(Q):
         i, j, d, a = Q.popleft()
         if grid[i][j] == 'E': return d
-        push(i + 1, j, d, a)
-        push(i - 1, j, d, a)
-        push(i, j + 1, d, a)
-        push(i, j - 1, d, a)
+        for ni, nj in (i+1, j), (i-1, j), (i, j+1), (i, j-1):
+            if not 0 <= ni < len(grid): continue
+            if not 0 <= nj < len(grid[ni]): continue
+            if (ni, nj) in visited: continue
+            b = grid[ni][nj].replace('E', 'z')
+            if ord(b) > ord(a) + 1: continue
+            visited.add((ni, nj))
+            Q.append((ni, nj, d + 1, b))
 
 grid = sys.stdin.read().splitlines()
 print(solve(grid, 'S'), solve(grid, 'S', 'a'))
