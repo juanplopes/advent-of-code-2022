@@ -1,45 +1,43 @@
-import sys, re, collections
-lines = [tuple(map(int, re.findall('[-0-9]+', x))) 
-            for x in sys.stdin.read().splitlines()]
-T = collections.defaultdict(lambda: [])
-B = collections.defaultdict(lambda: set())
-def add(i, a1, a2):
-    intervals = T[i]
-    while True:
-        for j, (b1, b2) in enumerate(intervals):
-            if a1 <= b2 and b1 <= a2:
-                intervals.pop(j)
-                a1, a2 = min(a1, b1), max(a2, b2)
-                break
-        else: 
-            T[i].append((a1, a2))
-            return
+import sys, re
+lines = [re.findall('[-0-9]+', x) for x in sys.stdin.read().splitlines()]
+T = [tuple(map(int, line)) for line in lines]
+B = set((int(c), int(d)) for _, _, c, d in T)
 
-for a, b, c, d in lines:
-    print(a, b, c, d)
-    B[d].add(c)
+def find(a, b, c, d, y):
     dist = abs(c-a) + abs(d-b)
-    add(b, a-dist, a+dist+1)
-    for i in range(dist):
-        add(b-i-1, a-dist+i+1, a+dist-i)
-        add(b+i+1, a-dist+i+1, a+dist-i)
+    return (a - (dist - abs(y - b)), a + (dist - abs(y - b)) + 1)
+
+def find_all(y):
+    return sorted(find(*item, y) for item in T)
+
+def find_disjoint(y):
+    maxx = float('-inf')
+    for a, b in find_all(y):
+        if b - max(maxx, a) > 0: yield max(maxx, a), b
+        maxx = max(maxx, b)
+
+def count_beacons(a, b, y):
+    return sum(a <= xb < b for xb, yb in B if yb == y)
+
+def contains(a, b, c, d, x1, y1, x2, y2):
+    q1, r1 = find(a, b, c, d, y1)
+    q2, r2 = find(a, b, c, d, y2-1)
+    return q1 <= x1 <= x2 <= r1 and q2 <= x1 <= x2 <= r2
+
+def search_single(x1, y1, x2, y2):
+    if any(contains(*item, x1, y1, x2, y2) for item in T): return None
+    if x1 >= x2 or y1 >= y2: return
+    if x2 - x1 == 1 and y2 - y1 == 1: return (x1, y1)
+    xm, ym = (x1+x2)>>1, (y1+y2)>>1
+    return (search_single(x1, y1, xm, ym) or
+            search_single(xm, y1, x2, ym) or
+            search_single(x1, ym, xm, y2) or
+            search_single(xm, ym, x2, y2))
 
 def solve(limit1, limit2):
-    total1 = 0
-    beacons = B[limit1]
-    for a, b in T[limit1]:
-        total1 += b - a - sum(a <= x < b for x in beacons)
-
-    for i in range(limit2+1):
-        intervals = T[i]
-        intervals.sort()
-        if len(intervals) != 1: print(i, intervals)
-        j = 0
-        while intervals[j][1] <= 0: j += 1
-        if (intervals[j][0] > 0):
-            return (total1, i)
-        if (intervals[j][1] < limit2):
-            return (total1, intervals[j][1]*4000000+i)
+    total1 = sum(b-a-count_beacons(a, b, limit1) for a, b in find_disjoint(limit1))
+    x, y = search_single(0, 0, limit2, limit2)
+    return (total1, x*4000000+y)
 
 #print(*solve(10, 20))
 print(*solve(2000000, 4000000))
