@@ -13,7 +13,7 @@ def visit(v, budget, state, value, answer):
     answer[state] = max(answer.get(state, 0), value)
     for u in F:
         newbudget = budget - T[v][u] - 1
-        if I[u] & state or newbudget < 0: continue
+        if I[u] & state or newbudget <= 0: continue
         visit(u, newbudget, state | I[u], value + newbudget * F[u], answer)
     return answer    
 
