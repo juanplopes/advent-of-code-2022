@@ -2,7 +2,7 @@ import sys, functools
 
 def parse(lines, index):
     items = [int(x.strip()) for x in lines[index+1].split(':')[1].split(',')]
-    expr = lines[index+2].split('=')[1].strip()
+    expr = compile(lines[index+2].split('=')[1].strip(), '<string>', 'eval')
     div = int(lines[index+3].split('by')[1].strip())
     m1 = int(lines[index+4].split('monkey')[1].strip())
     m2 = int(lines[index+5].split('monkey')[1].strip())
