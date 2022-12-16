@@ -2,11 +2,11 @@
 PYTHON_EXECUTABLE=pypy3
 FILES=${1:-day*.py}
 
-export TIMEFORMAT="Took: %Es"
 for f in $FILES
 do
     echo "------------------"
     echo "Running $f"
     filename="${f%.*}"
+    export TIMEFORMAT="|$f|%Es|"
     time $PYTHON_EXECUTABLE $f < in/$filename.in
 done
