@@ -9,12 +9,12 @@ for k in T:
         for j in T:
             T[i][j] = min(T[i][j], T[i][k]+T[k][j])
 
-def visit(v, budget, state, value, answer):
-    answer[state] = max(answer.get(state, 0), value)
+def visit(v, budget, state, flow, answer):
+    answer[state] = max(answer.get(state, 0), flow)
     for u in F:
         newbudget = budget - T[v][u] - 1
         if I[u] & state or newbudget <= 0: continue
-        visit(u, newbudget, state | I[u], value + newbudget * F[u], answer)
+        visit(u, newbudget, state | I[u], flow + newbudget * F[u], answer)
     return answer    
 
 total1 = max(visit('AA', 30, 0, 0, {}).values())
