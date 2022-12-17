@@ -2,20 +2,20 @@
 
 | File        | Time           |
 | ------------- |:-------------:|
-|day01.py|0.181s|
-|day02.py|0.172s|
-|day03.py|0.151s|
-|day04.py|0.170s|
-|day05.py|0.167s|
-|day06.py|0.157s|
-|day07.py|0.169s|
-|day08.py|0.413s|
-|day09.py|0.203s|
+|day01.py|0.177s|
+|day02.py|0.176s|
+|day03.py|0.150s|
+|day04.py|0.164s|
+|day05.py|0.160s|
+|day06.py|0.155s|
+|day07.py|0.161s|
+|day08.py|0.441s|
+|day09.py|0.202s|
 |day10.py|0.145s|
-|day11.py|0.346s|
-|day12.py|0.174s|
-|day13.py|0.231s|
-|day14.py|0.410s|
-|day15.py|3.493s|
-|day16.py|0.687s|
-|day17.py|0.779s|
+|day11.py|0.336s|
+|day12.py|0.170s|
+|day13.py|0.224s|
+|day14.py|0.385s|
+|day15.py|3.563s|
+|day16.py|0.663s|
+|day17.py|0.462s|
