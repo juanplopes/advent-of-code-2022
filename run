@@ -7,6 +7,7 @@ do
     echo "------------------"
     echo "Running $f"
     filename="${f%.*}"
-    export TIMEFORMAT="|$f|%Es|"
+    lines=$(wc -l < $f)
+    export TIMEFORMAT="|$f|$lines|%E|"
     time $PYTHON_EXECUTABLE $f < in/$filename.in
 done
