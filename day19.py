@@ -1,30 +1,39 @@
-import sys, re, collections
+import sys, re, functools, heapq
+
+def res(req, cur, prod):
+    return max((req - cur + prod - 1) // prod, 0) + 1
 
 def T(blueprint, mins):
     _, co, cc, cb1, cb2, cg1, cg2 = blueprint
-    mo = max(co, cc, cb1, cg1)
-    T = {(0, 0, 0, 1, 0, 0): 0}
-    for minute in range(mins, 1, -1):
-#        print(blueprint[0], minute, len(T), collections.Counter(x[0] for x in T))
-        maxg = max(T.values())
-        Q = {}
-        def p(v, *k): Q[k] = max(Q.get(k, 0), v)
-        for (o, c, b, ro, rc, rb), g in T.items():
-            if g+minute*minute-minute < maxg: continue
-            bo = o >= co and ro < mo and o+(ro*minute) < mo*minute
-            bc = o >= cc and rc < cb2 and c+(rc*minute) < cb2*minute
-            bb = o >= cb1 and c >= cb2 and rb < cg2 and b+(rb*minute) < cg2*minute
-            bg = o >= cg1 and b >= cg2
-            if minute >= 2:
-                if bo: p(g, o+ro-co, c+rc, b+rb, ro+1, rc, rb)
-                if bc: p(g, o+ro-cc, c+rc, b+rb, ro, rc+1, rb)
-                if bb: p(g, o+ro-cb1, c+rc-cb2, b+rb, ro, rc, rb+1)
-                if not all((bo, bc, bb, bg)): p(g, o+ro, c+rc, b+rb, ro, rc, rb)
-            if bg: p(g + (minute-1), o+ro-cg1, c+rc, b+rb-cg2, ro, rc, rb)
-        T = Q
-    return max(T.values())
+    mo = max(cc, cb1, cg1)
+    Q, V, maxx = [], {}, 0
+    def p(g, t, o, c, b, ro, rc, rb):
+        nonlocal maxx
+        k = (t, o, c, b, ro, rc, rb)
+        if t < 0 or -g+t*t-t < maxx or V.get(k, -1) >= -g: return
+        maxx = max(maxx, -g)
+        V[k] = -g
+        heapq.heappush(Q, (g, t, o, c, b, ro, rc, rb))
+
+    p(0, mins, 0, 0, 0, 1, 0, 0)
+    while Q:
+        g, t, o, c, b, ro, rc, rb = heapq.heappop(Q)
+        if -g+t*t-t < maxx: continue
+        if rb:
+            dt = max(res(cg1, o, ro), res(cg2, b, rb))
+            p(g - max(t-dt, 0), t-dt, o+dt*ro-cg1, c+dt*rc, b+dt*rb-cg2, ro, rc, rb)
+        if rc and rb < cg2 and b+(rb*t) < cg2*t:
+            dt = max(res(cb1, o, ro), res(cb2, c, rc))
+            p(g, t-dt, o+dt*ro-cb1, c+dt*rc-cb2, b+dt*rb, ro, rc, rb+1)
+        if rc < cb2 and c+(rc*t) < cb2*t:
+            dt = res(cc, o, ro)
+            p(g, t-dt, o+dt*ro-cc, c+dt*rc, b+dt*rb, ro, rc+1, rb)
+        if ro < mo and o+(ro*t) < mo*t:
+            dt = res(co, o, ro)
+            p(g, t-dt, o+dt*ro-co, c+dt*rc, b+dt*rb, ro+1, rc, rb)
+    return maxx    
 
 lines = [tuple(map(int, re.findall('\\d+', x))) for x in sys.stdin.read().splitlines()]
 total1 = sum(x[0] * T(x, 24) for x in lines)
-a, b, c = (T(x, 32) for x in lines[:3])
-print(total1, a * b * c)
+total2 = functools.reduce(lambda a, b: a*b, (T(x, 32) for x in lines[:3]), 1)
+print(total1, total2)

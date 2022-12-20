@@ -1,5 +1,6 @@
 #!/bin/bash
 PYTHON_EXECUTABLE=python3
+#PYTHON_EXECUTABLE=/usr/bin/python3
 FILES=${1:-day*.py}
 
 for f in $FILES
