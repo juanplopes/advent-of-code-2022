@@ -5,6 +5,7 @@ def T(blueprint, mins):
     mo = max(co, cc, cb1, cg1)
     T = {(0, 0, 0, 1, 0, 0): 0}
     for minute in range(mins, 1, -1):
+#        print(blueprint[0], minute, len(T), collections.Counter(x[0] for x in T))
         maxg = max(T.values())
         Q = {}
         def p(v, *k): Q[k] = max(Q.get(k, 0), v)
@@ -12,7 +13,7 @@ def T(blueprint, mins):
             if g+minute*minute-minute < maxg: continue
             bo = o >= co and ro < mo and o+(ro*minute) < mo*minute
             bc = o >= cc and rc < cb2 and c+(rc*minute) < cb2*minute
-            bb = o >= cb1 and c >= cb2 and rb < cg2
+            bb = o >= cb1 and c >= cb2 and rb < cg2 and b+(rb*minute) < cg2*minute
             bg = o >= cg1 and b >= cg2
             if minute >= 2:
                 if bo: p(g, o+ro-co, c+rc, b+rb, ro+1, rc, rb)
