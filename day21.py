@@ -1,5 +1,5 @@
-import sys, re
-OP = {'+': lambda a,b: a+b, '-': lambda a,b: a-b, '*': lambda a,b: a*b, '/': lambda a,b: a/b}
+import sys, re, operator
+OP = {'+': operator.add, '-': operator.sub, '*': operator.mul, '/': operator.truediv}
 T = {x[0]: x[1:] for x in ([re.split('[\\s:]+', x) for x in sys.stdin.read().splitlines()])}
 def evaluate(T, node):
     if len(node) == 1: return complex(node[0])
