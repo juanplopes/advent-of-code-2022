@@ -1,4 +1,4 @@
-import sys, re, math
+import sys, re
 OP = {'+': lambda a, b: a+b, '-': lambda a, b: a-b, 
       '*': lambda a, b: a*b, '/': lambda a, b: a/b}
 lines = [re.split('[\\s:]+', x) for x in sys.stdin.read().splitlines()]
