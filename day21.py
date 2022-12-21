@@ -5,6 +5,5 @@ def evaluate(T, x):
     if len(x) == 1: return complex(x[0])
     return OP[x[1]](evaluate(T, T[x[0]]), evaluate(T, T[x[2]]))
 
-Q = T | {'humn': [1j]}
-r2 = evaluate(Q, Q[Q['root'][0]]) - evaluate(Q, Q[Q['root'][2]])
+r2 = evaluate(T | {'humn': [1j]}, [T['root'][0], '-', T['root'][2]])
 print(int(evaluate(T, T['root']).real), round(r2.real/-r2.imag))
