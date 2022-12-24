@@ -4,7 +4,7 @@ N, M = len(T)-2, len(T[0])-2
 FN, FS = ([set(i for i in range(N) if T[i+1][j+1] == c) for j in range(M)] for c in '^v')
 FW, FE = ([set(j for j in range(M) if T[i+1][j+1] == c) for i in range(N)] for c in '<>')
 
-def solve(si, sj, ei, ej, st):
+def solve(st, si, sj, ei, ej):
     queue, visited = collections.deque([(si, sj, st)]), set([(si, sj, st%(N*M))])
     while queue:
         i, j, t = queue.popleft()
@@ -17,7 +17,7 @@ def solve(si, sj, ei, ej, st):
             visited.add((ni, nj, (t + 1) % (M * N)))
             queue.append((ni, nj, t + 1))
 
-ta = solve(-1, 0, N, M-1, 0)
-tb = solve(N, M-1, -1, 0, ta)
-tc = solve(-1, 0, N, M-1, tb)
+ta = solve(0, -1, 0, N, M-1)
+tb = solve(ta, N, M-1, -1, 0)
+tc = solve(tb, -1, 0, N, M-1)
 print(ta, tc)
