@@ -9,6 +9,8 @@ do
     echo "Running $f"
     filename="${f%.*}"
     lines=$(grep -c '^' $f)
-    export TIMEFORMAT="|[$f](https://github.com/juanplopes/advent-of-code-2022/blob/main/$f)|$lines|%E|"
+    number=$(echo ${f//[^0-9]/} | bc)
+    echo $number
+    export TIMEFORMAT="|[Day $number](https://adventofcode.com/2022/day/$number)|[$f](https://github.com/juanplopes/advent-of-code-2022/blob/main/$f)|$lines|%E|"
     time $PYTHON_EXECUTABLE $f < in/$filename.in
 done
