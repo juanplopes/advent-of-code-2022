@@ -1,7 +1,7 @@
 # Advent of Code 2022
 
 | Day        | File        | Lines | Time (s)          |
-| ------------- |:-------------:|:-------------:|
+| ------------- |:-------------:|:-------------:|:-------------:|
 |[Day 1](https://adventofcode.com/2022/day/1)|[day01.py](https://github.com/juanplopes/advent-of-code-2022/blob/main/day01.py)|12|0.162|
 |[Day 2](https://adventofcode.com/2022/day/2)|[day02.py](https://github.com/juanplopes/advent-of-code-2022/blob/main/day02.py)|15|0.163|
 |[Day 3](https://adventofcode.com/2022/day/3)|[day03.py](https://github.com/juanplopes/advent-of-code-2022/blob/main/day03.py)|13|0.144|
