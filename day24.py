@@ -5,11 +5,11 @@ FN, FS = ([set(i for i in range(N) if T[i+1][j+1] == c) for j in range(M)] for c
 FW, FE = ([set(j for j in range(M) if T[i+1][j+1] == c) for i in range(N)] for c in '<>')
 
 def solve(st, si, sj, ei, ej):
-    queue, visited = collections.deque([(si, sj, st)]), set([(si, sj, st%(N*M))])
+    queue, visited = collections.deque([(si, sj, st)]), set()
     while queue:
         i, j, t = queue.popleft()
         if i == ei and j == ej: return t
-        for ni, nj in ((i, j), (i-1, j), (i+1, j), (i, j-1), (i, j+1)):
+        for ni, nj in (i, j), (i-1, j), (i+1, j), (i, j-1), (i, j+1):
             if not -1 <= ni <= N or not -1 <= nj <= M or T[ni+1][nj+1] == '#': continue
             if 0 <= nj < M and ((ni-t-1)%N in FS[nj] or (ni+t+1)%N in FN[nj]): continue
             if 0 <= ni < N and ((nj-t-1)%M in FE[ni] or (nj+t+1)%M in FW[ni]): continue
