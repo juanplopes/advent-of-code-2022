@@ -10,7 +10,7 @@ def solve(si, sj, ei, ej, st):
         i, j, t = queue.popleft()
         if i == ei and j == ej: return t
         for ni, nj in ((i, j), (i-1, j), (i+1, j), (i, j-1), (i, j+1)):
-            if not 0 <= ni+1 < len(T) or not 0 <= nj+1 < len(T[0]) or T[ni+1][nj+1] == '#': continue
+            if not -1 <= ni <= N or not -1 <= nj <= M or T[ni+1][nj+1] == '#': continue
             if 0 <= nj < M and ((ni-t-1)%N in FS[nj] or (ni+t+1)%N in FN[nj]): continue
             if 0 <= ni < N and ((nj-t-1)%M in FE[ni] or (nj+t+1)%M in FW[ni]): continue
             if (ni, nj, (t + 1) % (M * N)) in visited: continue
