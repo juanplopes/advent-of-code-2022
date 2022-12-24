@@ -8,8 +8,7 @@ def solve(si, sj, ei, ej, st):
     queue, visited = collections.deque([(si, sj, st)]), set([(si, sj, st%(N*M))])
     while queue:
         i, j, t = queue.popleft()
-        if i == ei and j == ej: 
-            return t
+        if i == ei and j == ej: return t
         for ni, nj in ((i, j), (i-1, j), (i+1, j), (i, j-1), (i, j+1)):
             if not 0 <= ni+1 < len(T) or not 0 <= nj+1 < len(T[0]) or T[ni+1][nj+1] == '#': continue
             if 0 <= nj < M and ((ni-t-1)%N in FS[nj] or (ni+t+1)%N in FN[nj]): continue
