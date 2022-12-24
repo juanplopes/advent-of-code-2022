@@ -5,11 +5,12 @@ FILES=${1:-day*.py}
 
 for f in $FILES
 do
-    echo "------------------"
-    echo "Running $f"
     filename="${f%.*}"
     lines=$(grep -c '^' $f)
     number=$(echo ${f//[^0-9]/} | bc)
+
+    echo "------------------"
+    echo "Running $f (day $number)"
     echo $number
     export TIMEFORMAT="|[Day $number](https://adventofcode.com/2022/day/$number)|[$f](https://github.com/juanplopes/advent-of-code-2022/blob/main/$f)|$lines|%E|"
     time $PYTHON_EXECUTABLE $f < in/$filename.in

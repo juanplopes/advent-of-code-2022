@@ -3,8 +3,7 @@ T = sys.stdin.read().splitlines()
 N, M = len(T) - 2, len(T[0]) - 2
 def solve(st, si, sj, ei, ej):
     Q = {(si, sj, st)}
-    while Q:
-        i, j, t = next(iter(Q))
+    for i, j, t in iter(lambda: next(iter(Q), None), None):
         Q.remove((i, j, t))
         if i == ei and j == ej: return t
         for ni, nj in (i, j), (i-1, j), (i+1, j), (i, j-1), (i, j+1):
