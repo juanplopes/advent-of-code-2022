@@ -1,4 +1,4 @@
-import sys, collections
+import sys
 T = sys.stdin.read().splitlines()
 N, M = len(T) - 2, len(T[0]) - 2
 def solve(st, si, sj, ei, ej):
