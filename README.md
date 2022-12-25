@@ -26,4 +26,4 @@
 |[Day 22](https://adventofcode.com/2022/day/22)|[day22.py](https://github.com/juanplopes/advent-of-code-2022/blob/main/day22.py)|42|0.191|
 |[Day 23](https://adventofcode.com/2022/day/23)|[day23.py](https://github.com/juanplopes/advent-of-code-2022/blob/main/day23.py)|35|4.592|
 |[Day 24](https://adventofcode.com/2022/day/24)|[day24.py](https://github.com/juanplopes/advent-of-code-2022/blob/main/day24.py)|17|0.341|
-|[Day 25](https://adventofcode.com/2022/day/25)|[day25.py](https://github.com/juanplopes/advent-of-code-2022/blob/main/day25.py)|16|0.147|
+|[Day 25](https://adventofcode.com/2022/day/25)|[day25.py](https://github.com/juanplopes/advent-of-code-2022/blob/main/day25.py)|11|0.175|
